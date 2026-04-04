@@ -7,13 +7,30 @@ import StarBackground from './components/StarBackground';
 import LoveNote from './components/LoveNote';
 import './App.css';
 
-// Flow: popup → countdown 3-2-1 → matrix animation → pink book
+function useOrientation() {
+  const [isPortrait, setIsPortrait] = useState(
+    () => window.innerHeight > window.innerWidth
+  );
+
+  useEffect(() => {
+    const check = () => setIsPortrait(window.innerHeight > window.innerWidth);
+    window.addEventListener('resize', check);
+    window.addEventListener('orientationchange', check);
+    return () => {
+      window.removeEventListener('resize', check);
+      window.removeEventListener('orientationchange', check);
+    };
+  }, []);
+
+  return isPortrait;
+}
 
 function App() {
-  const [stage, setStage] = useState('popup'); // popup | countdown | animation | lovenote
+  const [stage, setStage] = useState('popup');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState('idle');
   const timeoutRef = useRef(null);
+  const isPortrait = useOrientation();
 
   const messages = [
     { text: 'HAPPY',                   size: 'xl' },
@@ -28,9 +45,7 @@ function App() {
 
   useEffect(() => {
     if (stage !== 'animation') return;
-
     setPhase('in');
-
     timeoutRef.current = setTimeout(() => {
       setPhase('out');
       timeoutRef.current = setTimeout(() => {
@@ -42,20 +57,28 @@ function App() {
         }
       }, 600);
     }, 2200);
-
     return () => clearTimeout(timeoutRef.current);
   }, [stage, currentIndex]);
 
-  const handleStart = () => {
-    setStage('countdown');
-  };
-
+  const handleStart = () => setStage('countdown');
   const handleCountdownDone = () => {
     setCurrentIndex(0);
     setStage('animation');
   };
 
   const isLovenote = stage === 'lovenote';
+
+  // Show rotate prompt only on mobile-sized portrait screens
+  const isMobile = window.innerWidth <= 900 || window.innerHeight <= 900;
+  if (isPortrait && isMobile) {
+    return (
+      <div className="rotate-prompt">
+        <div className="rotate-icon">📱</div>
+        <p className="rotate-text">Rotate your phone<br />to landscape mode 🌸</p>
+        <p className="rotate-sub">This experience is best viewed sideways ✨</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

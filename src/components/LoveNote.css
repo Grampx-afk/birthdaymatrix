@@ -1,3 +1,4 @@
+/* ── Overlay ── */
 .note-overlay {
   position: fixed;
   inset: 0;
@@ -13,12 +14,12 @@
 
 @keyframes noteAppear { to { opacity: 1; } }
 
-/* Tap zones */
+/* ── Tap zones ── */
 .book-tap-left,
 .book-tap-right {
   position: fixed;
   top: 0; bottom: 0;
-  width: 16vw;
+  width: 12vw;
   z-index: 80;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -30,39 +31,40 @@
 .open-book {
   position: relative;
   display: flex;
-  width: min(700px, 93vw);
-  height: min(420px, 60vw);
-  min-height: 270px;
+  flex-direction: row;
+  /* landscape: fit within viewport */
+  width: min(96vw, 860px);
+  height: min(82vh, 480px);
+  min-height: 220px;
   border-radius: 10px;
-  filter: drop-shadow(0 0 35px rgba(255, 80, 130, 0.45));
+  filter: drop-shadow(0 0 28px rgba(255, 80, 130, 0.5));
   animation: bookFloat 3.5s ease-in-out infinite;
   z-index: 60;
 }
 
 /* Page turn animations */
-.open-book.enter      { animation: bookEnter 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards, bookFloat 3.5s 0.45s ease-in-out infinite; }
+.open-book.enter {
+  animation: bookEnter 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards,
+             bookFloat 3.5s 0.45s ease-in-out infinite;
+}
 .open-book.exit-left  { animation: bookExitLeft  0.35s ease-in forwards; }
 .open-book.exit-right { animation: bookExitRight 0.35s ease-in forwards; }
 
 @keyframes bookFloat {
-  0%,100% { transform: translateY(0px)   rotate(-0.5deg); }
-  50%     { transform: translateY(-10px) rotate(0.5deg);  }
+  0%,100% { transform: translateY(0px)   rotate(-0.4deg); }
+  50%     { transform: translateY(-8px)  rotate(0.4deg);  }
 }
 @keyframes bookEnter {
-  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  from { opacity: 0; transform: scale(0.88) translateY(14px); }
   to   { opacity: 1; transform: scale(1)    translateY(0);    }
 }
-@keyframes bookExitLeft {
-  to { opacity: 0; transform: scale(0.9) translateX(-30px); }
-}
-@keyframes bookExitRight {
-  to { opacity: 0; transform: scale(0.9) translateX(30px); }
-}
+@keyframes bookExitLeft  { to { opacity: 0; transform: scale(0.9) translateX(-28px); } }
+@keyframes bookExitRight { to { opacity: 0; transform: scale(0.9) translateX(28px);  } }
 
 /* ── Pages ── */
 .book-page {
   flex: 1;
-  padding: clamp(14px, 3vw, 28px);
+  padding: clamp(12px, 2.5vw, 24px);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -87,14 +89,14 @@
   inset: 0;
   background-image: repeating-linear-gradient(
     transparent, transparent 27px,
-    rgba(255,160,190,0.2) 27px, rgba(255,160,190,0.2) 28px
+    rgba(255,160,190,0.18) 27px, rgba(255,160,190,0.18) 28px
   );
   pointer-events: none;
 }
 
 /* ── Spine ── */
 .book-spine {
-  width: 18px;
+  width: 16px;
   flex-shrink: 0;
   background: linear-gradient(180deg, #e699b0 0%, #c05c80 50%, #e699b0 100%);
   box-shadow: inset -3px 0 6px rgba(0,0,0,0.15), inset 3px 0 6px rgba(0,0,0,0.1);
@@ -104,19 +106,19 @@
 .page-hearts { position: absolute; inset: 0; pointer-events: none; }
 .note-heart {
   position: absolute;
-  font-size: clamp(10px, 1.8vw, 16px);
+  font-size: clamp(9px, 1.5vw, 14px);
   opacity: 0.5;
   animation: floatHeart 4s ease-in-out infinite;
 }
 @keyframes floatHeart {
-  0%,100% { transform: translateY(0)   rotate(-5deg); opacity: 0.45; }
-  50%     { transform: translateY(-9px) rotate(5deg);  opacity: 0.75; }
+  0%,100% { transform: translateY(0)   rotate(-5deg); opacity: 0.4; }
+  50%     { transform: translateY(-8px) rotate(5deg);  opacity: 0.7; }
 }
 
 /* ── Intro page (page 0) ── */
 .note-char {
-  font-size: clamp(46px, 9vw, 72px);
-  margin-bottom: 6px;
+  font-size: clamp(36px, 7vh, 60px);
+  margin-bottom: 4px;
   animation: charBounce 2.2s ease-in-out infinite;
   line-height: 1;
 }
@@ -127,46 +129,46 @@
 .note-text {
   font-family: 'Caveat', cursive;
   color: #7a1e40;
-  line-height: 1.55;
+  line-height: 1.5;
   text-align: center;
   position: relative;
   z-index: 1;
 }
 .note-greeting {
-  font-size: clamp(17px, 3.2vw, 24px);
+  font-size: clamp(16px, 3vh, 24px);
   font-weight: 700;
   color: #c23468;
-  margin: 0 0 6px;
+  margin: 0 0 5px;
 }
 .note-body {
-  font-size: clamp(12px, 2vw, 17px);
+  font-size: clamp(12px, 2vh, 16px);
   color: #8b2e50;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 .note-sig {
-  font-size: clamp(14px, 2.4vw, 20px);
+  font-size: clamp(13px, 2.2vh, 19px);
   font-weight: 700;
   color: #c23468;
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 
 /* Tap hint */
 .page-hint {
   position: absolute;
-  bottom: 10px;
-  right: 14px;
+  bottom: 8px;
+  right: 12px;
   font-family: 'Caveat', cursive;
-  font-size: clamp(10px, 1.6vw, 13px);
+  font-size: clamp(10px, 1.5vh, 13px);
   color: rgba(194, 52, 104, 0.45);
   animation: hintPulse 2.2s ease-in-out infinite;
   z-index: 2;
 }
 .last-hint {
-  font-size: clamp(13px, 2.2vw, 18px);
+  font-size: clamp(12px, 2vh, 17px);
   font-weight: 700;
   color: #c23468;
-  bottom: 14px;
-  right: 18px;
+  bottom: 12px;
+  right: 16px;
   opacity: 1;
   animation: none;
 }
@@ -179,7 +181,7 @@
 .photo-quote-left {
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(16px, 3vw, 32px);
+  padding: clamp(14px, 2.5vw, 28px);
 }
 .photo-quote-inner {
   position: relative;
@@ -188,30 +190,30 @@
 }
 .pq-mark {
   font-family: 'Caveat', cursive;
-  font-size: clamp(50px, 9vw, 88px);
-  color: rgba(194, 52, 104, 0.2);
+  font-size: clamp(44px, 8vh, 80px);
+  color: rgba(194, 52, 104, 0.18);
   line-height: 0.5;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: block;
 }
 .pq-text {
   font-family: 'Caveat', cursive;
-  font-size: clamp(13px, 2.1vw, 18px);
+  font-size: clamp(12px, 2vh, 17px);
   color: #8b2e50;
-  line-height: 1.7;
+  line-height: 1.65;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .pq-line {
-  width: 36px;
+  width: 34px;
   height: 2px;
   background: linear-gradient(90deg, #c23468, transparent);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   border-radius: 2px;
 }
 .pq-caption {
   font-family: 'Caveat', cursive;
-  font-size: clamp(11px, 1.8vw, 15px);
+  font-size: clamp(11px, 1.8vh, 14px);
   font-weight: 700;
   color: #c23468;
 }
@@ -239,7 +241,7 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to left, transparent 55%, rgba(255,240,245,0.5) 100%
+    to left, transparent 55%, rgba(255,240,245,0.45) 100%
   );
   pointer-events: none;
 }
@@ -248,7 +250,7 @@
 .book-dots {
   display: flex;
   gap: 9px;
-  margin-top: 18px;
+  margin-top: 14px;
   z-index: 60;
 }
 .bdot {
@@ -264,20 +266,13 @@
   transform: scale(1.4);
 }
 
-/* Mobile */
-@media (max-width: 580px) {
+/* ── Small landscape phones (height < 450px) ── */
+@media (max-height: 450px) and (orientation: landscape) {
   .open-book {
-    flex-direction: column;
-    height: min(72vh, 560px);
-    min-height: 400px;
+    height: min(90vh, 340px);
+    min-height: 180px;
   }
-  .book-page.left  { border-radius: 10px 10px 0 0; flex: 0 0 44%; }
-  .book-page.right { border-radius: 0 0 10px 10px; flex: 1; }
-  .book-spine {
-    width: 100%; height: 14px;
-    background: linear-gradient(90deg, #e699b0, #c05c80 50%, #e699b0);
-  }
-  .photo-book-frame { border-radius: 0 0 10px 10px; }
-  .book-tap-left  { width: 12vw; }
-  .book-tap-right { width: 12vw; }
+  .note-char { font-size: clamp(28px, 6vh, 42px); }
+  .book-dots { margin-top: 8px; }
+  .bdot { width: 7px; height: 7px; }
 }

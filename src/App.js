@@ -5,6 +5,7 @@ import Animation from './components/Animation';
 import MatrixBackground from './components/MatrixBackground';
 import StarBackground from './components/StarBackground';
 import LoveNote from './components/LoveNote';
+import RotatePrompt from './components/RotatePrompt';
 import './App.css';
 
 // Flow: popup → countdown 3-2-1 → matrix animation → pink book
@@ -59,6 +60,9 @@ function App() {
 
   return (
     <div className="app">
+      {/* Portrait-mode rotate prompt — CSS hides it on desktop/landscape */}
+      <RotatePrompt />
+
       {isLovenote ? <StarBackground /> : <MatrixBackground />}
       {!isLovenote && <div className="scanline" />}
 

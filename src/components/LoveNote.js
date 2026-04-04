@@ -4,7 +4,7 @@ import './LoveNote.css';
 const photoPages = [
   {
     photo: '/photo1.jpg',
-    quote: 'That smile of yours doesn't just light up a room — it rewires my entire world. I think about it on my worst days and somehow everything becomes easier to carry.',
+    quote: "That smile of yours doesn't just light up a room — it rewires my entire world. I think about it on my worst days and somehow everything becomes easier to carry.",
     caption: 'My sunshine 🌞',
   },
   {
@@ -14,7 +14,7 @@ const photoPages = [
   },
   {
     photo: '/photo3.jpg',
-    quote: 'Even then — even before I knew you — God was already crafting something extraordinary. This little girl grew into my whole heart. Look how far you've come, my love. 18 years of pure magic.',
+    quote: "Even then — even before I knew you — God was already crafting something extraordinary. This little girl grew into my whole heart. Look how far you've come, my love. 18 years of pure magic.",
     caption: 'Where it all began 🌹',
   },
 ];
@@ -66,7 +66,7 @@ function LoveNote() {
       <div className={`open-book ${anim}`}>
 
         {page === 0 ? (
-          /* ── PAGE 0: Original intro note ── */
+          /* -- PAGE 0: Original intro note -- */
           <>
             <div className="book-page left">
               <div className="page-hearts">
@@ -112,7 +112,7 @@ function LoveNote() {
             </div>
           </>
         ) : (
-          /* ── PAGES 1-3: Photo + quote ── */
+          /* -- PAGES 1-3: Photo + quote -- */
           <>
             {/* Left: quote */}
             <div className="book-page left photo-quote-left">

@@ -7,49 +7,11 @@ import StarBackground from './components/StarBackground';
 import LoveNote from './components/LoveNote';
 import './App.css';
 
-function useOrientation() {
-  const getIsPortrait = () => {
-    // Try screen.orientation API first (most reliable)
-    if (window.screen && window.screen.orientation) {
-      const type = window.screen.orientation.type;
-      return type.includes('portrait');
-    }
-    // Fallback: compare dimensions
-    return window.innerHeight > window.innerWidth;
-  };
-
-  const [isPortrait, setIsPortrait] = useState(getIsPortrait);
-
-  useEffect(() => {
-    const handler = () => {
-      // Small delay to let browser finish rotating
-      setTimeout(() => setIsPortrait(getIsPortrait()), 100);
-    };
-
-    window.addEventListener('resize', handler);
-    window.addEventListener('orientationchange', handler);
-    if (window.screen?.orientation) {
-      window.screen.orientation.addEventListener('change', handler);
-    }
-
-    return () => {
-      window.removeEventListener('resize', handler);
-      window.removeEventListener('orientationchange', handler);
-      if (window.screen?.orientation) {
-        window.screen.orientation.removeEventListener('change', handler);
-      }
-    };
-  }, []);
-
-  return isPortrait;
-}
-
 function App() {
   const [stage, setStage] = useState('popup');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState('idle');
   const timeoutRef = useRef(null);
-  const isPortrait = useOrientation();
 
   const messages = [
     { text: 'HAPPY',                   size: 'xl' },
@@ -86,18 +48,6 @@ function App() {
   };
 
   const isLovenote = stage === 'lovenote';
-
-  // Only show rotate prompt on mobile (small screens) in portrait
-  const isSmallScreen = Math.min(window.innerWidth, window.innerHeight) < 600;
-  if (isPortrait && isSmallScreen) {
-    return (
-      <div className="rotate-prompt">
-        <div className="rotate-icon">📱</div>
-        <p className="rotate-text">Rotate your phone<br />to landscape mode 🌸</p>
-        <p className="rotate-sub">This experience is best viewed sideways ✨</p>
-      </div>
-    );
-  }
 
   return (
     <div className="app">

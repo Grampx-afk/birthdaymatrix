@@ -24,6 +24,18 @@
   to   { opacity: 1; }
 }
 
+/* Fade-out triggered after 3 s */
+.rotate-overlay.rotate-fadeout {
+  animation: roFadeOut 0.6s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes roFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+
 /* Animated phone icon */
 .rotate-phone-icon {
   font-size: 72px;

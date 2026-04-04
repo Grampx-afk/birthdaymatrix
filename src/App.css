@@ -9,6 +9,18 @@
   justify-content: center;
 }
 
+/* Force landscape visually when phone is held vertically */
+@media screen and (orientation: portrait) {
+  .app {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vh;
+    height: 100vw;
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+}
+
 .scanline {
   position: fixed;
   inset: 0;

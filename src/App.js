@@ -7,11 +7,28 @@ import StarBackground from './components/StarBackground';
 import LoveNote from './components/LoveNote';
 import './App.css';
 
+function useIsPortrait() {
+  const check = () => window.innerWidth < window.innerHeight;
+  const [isPortrait, setIsPortrait] = useState(check);
+
+  useEffect(() => {
+    const handler = () => {
+      // Delay so browser finishes resizing after rotation
+      setTimeout(() => setIsPortrait(check()), 150);
+    };
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  return isPortrait;
+}
+
 function App() {
   const [stage, setStage] = useState('popup');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState('idle');
   const timeoutRef = useRef(null);
+  const isPortrait = useIsPortrait();
 
   const messages = [
     { text: 'HAPPY',                   size: 'xl' },
@@ -48,6 +65,17 @@ function App() {
   };
 
   const isLovenote = stage === 'lovenote';
+
+  // Show rotate prompt whenever width < height (portrait)
+  if (isPortrait) {
+    return (
+      <div className="rotate-prompt">
+        <div className="rotate-icon">📱</div>
+        <p className="rotate-text">Rotate your phone<br />to landscape mode 🌸</p>
+        <p className="rotate-sub">This experience is best viewed sideways ✨</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

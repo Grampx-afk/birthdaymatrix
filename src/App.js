@@ -8,13 +8,13 @@ import LoveNote from './components/LoveNote';
 import './App.css';
 
 function useIsPortrait() {
-  const check = () => window.innerWidth < window.innerHeight;
-  const [isPortrait, setIsPortrait] = useState(check);
+  const [isPortrait, setIsPortrait] = useState(() => window.innerWidth < window.innerHeight);
 
   useEffect(() => {
     const handler = () => {
-      // Delay so browser finishes resizing after rotation
-      setTimeout(() => setIsPortrait(check()), 150);
+      setTimeout(() => {
+        setIsPortrait(window.innerWidth < window.innerHeight);
+      }, 200);
     };
     window.addEventListener('resize', handler);
     return () => window.removeEventListener('resize', handler);
@@ -66,7 +66,6 @@ function App() {
 
   const isLovenote = stage === 'lovenote';
 
-  // Show rotate prompt whenever width < height (portrait)
   if (isPortrait) {
     return (
       <div className="rotate-prompt">
@@ -81,7 +80,6 @@ function App() {
     <div className="app">
       {isLovenote ? <StarBackground /> : <MatrixBackground />}
       {!isLovenote && <div className="scanline" />}
-
       {stage === 'popup'     && <Popup onStart={handleStart} />}
       {stage === 'countdown' && <Countdown onDone={handleCountdownDone} />}
       {stage === 'animation' && (

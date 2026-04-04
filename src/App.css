@@ -22,3 +22,44 @@
     rgba(255, 26, 26, 0.012) 4px
   );
 }
+
+/* ── Rotate Prompt ── */
+.rotate-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0d001a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.rotate-icon {
+  font-size: 64px;
+  animation: rotatePhone 2s ease-in-out infinite;
+}
+
+@keyframes rotatePhone {
+  0%, 30%  { transform: rotate(0deg); }
+  60%, 90% { transform: rotate(90deg); }
+  100%     { transform: rotate(0deg); }
+}
+
+.rotate-text {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  color: #ff9ec0;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rotate-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: rgba(255, 158, 192, 0.5);
+  text-align: center;
+  margin: 0;
+}

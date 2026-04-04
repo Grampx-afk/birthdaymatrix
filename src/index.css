@@ -1,0 +1,22 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0d001a;
+  --red: #ff1a1a;
+  --red-dim: #aa0000;
+  --red-bright: #ff4444;
+  --white: #ffffff;
+  --gold: #c8a96e;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Orbitron', monospace;
+}

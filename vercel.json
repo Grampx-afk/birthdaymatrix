@@ -2,5 +2,4 @@
   "framework": "create-react-app",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "nodeVersion": "20.x"
 }

@@ -8,17 +8,36 @@ import LoveNote from './components/LoveNote';
 import './App.css';
 
 function useOrientation() {
-  const [isPortrait, setIsPortrait] = useState(
-    () => window.innerHeight > window.innerWidth
-  );
+  const getIsPortrait = () => {
+    // Try screen.orientation API first (most reliable)
+    if (window.screen && window.screen.orientation) {
+      const type = window.screen.orientation.type;
+      return type.includes('portrait');
+    }
+    // Fallback: compare dimensions
+    return window.innerHeight > window.innerWidth;
+  };
+
+  const [isPortrait, setIsPortrait] = useState(getIsPortrait);
 
   useEffect(() => {
-    const check = () => setIsPortrait(window.innerHeight > window.innerWidth);
-    window.addEventListener('resize', check);
-    window.addEventListener('orientationchange', check);
+    const handler = () => {
+      // Small delay to let browser finish rotating
+      setTimeout(() => setIsPortrait(getIsPortrait()), 100);
+    };
+
+    window.addEventListener('resize', handler);
+    window.addEventListener('orientationchange', handler);
+    if (window.screen?.orientation) {
+      window.screen.orientation.addEventListener('change', handler);
+    }
+
     return () => {
-      window.removeEventListener('resize', check);
-      window.removeEventListener('orientationchange', check);
+      window.removeEventListener('resize', handler);
+      window.removeEventListener('orientationchange', handler);
+      if (window.screen?.orientation) {
+        window.screen.orientation.removeEventListener('change', handler);
+      }
     };
   }, []);
 
@@ -68,9 +87,9 @@ function App() {
 
   const isLovenote = stage === 'lovenote';
 
-  // Show rotate prompt only on mobile-sized portrait screens
-  const isMobile = window.innerWidth <= 900 || window.innerHeight <= 900;
-  if (isPortrait && isMobile) {
+  // Only show rotate prompt on mobile (small screens) in portrait
+  const isSmallScreen = Math.min(window.innerWidth, window.innerHeight) < 600;
+  if (isPortrait && isSmallScreen) {
     return (
       <div className="rotate-prompt">
         <div className="rotate-icon">📱</div>
